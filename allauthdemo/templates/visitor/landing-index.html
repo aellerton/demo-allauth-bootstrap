@@ -1,0 +1,22 @@
+{% extends "bases/bootstrap-visitor.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="container">
+  <div class="jumbotron text-center">
+    <h1>This = Django-Allauth <br>+ Bootstrap</h1>
+    <p class="lead">
+      Read more on the <a href="{% url 'landing_about' %}">About Page.</a>
+    </p>
+    <p>
+      <a class="btn btn-lg btn-success " href="{% url 'account_signup' %}" role="button">Join</a>
+      or
+      <a class="btn btn-lg btn-success " href="{% url 'account_login' %}" role="button">Log In</a>
+    </p>
+  </div>
+</div>
+
+{% endblock %}
+
+

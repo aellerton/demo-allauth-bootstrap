@@ -1,0 +1,57 @@
+{% extends "bases/bootstrap-auth.html" %}
+
+{% load url from future %}
+{% load i18n %}
+{% load bootstrap3 %}
+{% load account %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+
+{% block inner-content %}
+
+      <h1 class="text-center">Log In</h1>
+      <hr>
+
+      <div class="row">
+        <div class="col-md-5 col-lg-5">
+
+          {% if socialaccount.providers  %}
+
+          <!--
+          This is the raw "real" HTML that facebook recommends.
+          Leaving here for reference.
+
+          <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="false"></div>
+          -->
+
+          <div class="socialaccount_ballot">
+            <ul class="socialaccount_providers list-unstyled">
+              {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+            </ul>
+
+            <div class="login-or">{% trans 'or' %}</div>
+          </div>
+
+          {% include "socialaccount/snippets/login_extra.html" %}
+          {% endif %}
+        </div>
+
+        <div class="col-md-7 col-lg-7">
+          <form class="login" method="POST" action="{% url 'account_login' %}">
+              <span class="pull-right">Not yet a member? <a href="{% url 'account_signup' %}">Join</a></span>
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+            <div class="form-actions">
+              <button class="btn btn-primary pull-right" type="submit">{% trans "Sign In" %}</button>
+              <a class="btn" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+{% endblock %}
+

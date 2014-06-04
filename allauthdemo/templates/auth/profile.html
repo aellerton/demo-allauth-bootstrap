@@ -1,0 +1,44 @@
+{% extends "bases/bootstrap-member.html" %}
+
+{% load bootstrap3 %}
+
+
+{% block content %}
+<div class="container">
+<h1>Profile</h1>
+  {# Hmm. Not thrilled about this. #}
+  {# Could use django-bootstrap3 which removes some of this ugliness. #}
+  {# Or some AJAX-based way to retrieve messages. #}
+  {# I don't like the use of cookies for this. #}
+
+  {% bootstrap_messages %}
+
+<div class="row">
+<div class="col-md-6 col-lg-6">
+
+  <form action="{% url 'account_profile' %}" method="post" class="form">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+    <button type="submit" class="btn btn-primary">
+      {% bootstrap_icon "star" %} Submit
+    </button>
+    {% endbuttons %}
+
+<!--
+    <div class="form-group">
+      <div class="col-sm-12">
+        <button type="submit" class="btn btn-primary pull-right"> Submit </button>
+      </div>
+    </div>
+-->
+  </form>
+</div>
+
+<div class="col-md-6 col-lg-6">
+  TODO: DOB, picture
+</div>
+</div>
+</div>
+
+{% endblock %}
