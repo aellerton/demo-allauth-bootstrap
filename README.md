@@ -9,7 +9,10 @@ after that this should "just work", out of the box.
 
 ## Objectives
 
-TODO
+1. Help anyone building a new site get up and going quickly with allauth.
+
+2. Help remind me how a basic site hangs together ;)
+
 
 ## Getting Running
 
@@ -30,9 +33,40 @@ At this point you should have a site that allows registration of local users.
 ## Getting Running without Social App Integration
 
 1. Register an app with the Social sites of your choice, such as Google and Facebook.
-   Some notes below.
+   Some notes on that in below.
 
-2.
+2. You can generate some seed data with:
+
+    $ python configure.py
+
+    ----------
+    Admin User
+    ----------
+
+
+    Do you want to set up a superuser?
+
+    Doing it now means you don't have to re-enter it every time
+    you rebuild the database in development.
+
+    Please enter "yes" or "no": yes
+
+    ...
+
+    All done. 
+    Wrote ``seed.sql``.
+
+    Next, run ``make rebuild`` then ``make run`` 
+    (or ``python manage.py runserver``).
+
+
+I like using ``Makefiles`` for simple tasks but I'm probably in the minority
+these days. In any case, once the seed file is generated you can rebuild your
+database from scratch, clean all the ``pyc`` files and run the server with:
+
+    make rebuild clean run
+
+Suggestions on a better approach for seed data are welcome.
 
 
 ### Configure Facebook Login
