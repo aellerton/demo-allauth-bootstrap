@@ -122,9 +122,14 @@ Read about bootstrap3 here: http://django-bootstrap3.readthedocs.org/en/latest/
 
 ## Why I built this
 
-TODO
+I'd struggled with outdated Django registration modules before and was pleasantly
+surprised to find django-allauth. Sarah's tutorial is superb but I wanted something
+more full to use as a basis for future work, and figured it might help others.
+
 
 ## Credits
+
+Thanks to Raymond for django-allauth and Sarah for her tutorial.
 
 
 ## Rough Edges
