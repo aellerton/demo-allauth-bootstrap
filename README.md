@@ -37,27 +37,27 @@ At this point you should have a site that allows registration of local users.
 
 2. You can generate some seed data with:
 
-    $ python configure.py
-
-    ----------
-    Admin User
-    ----------
-
-
-    Do you want to set up a superuser?
-
-    Doing it now means you don't have to re-enter it every time
-    you rebuild the database in development.
-
-    Please enter "yes" or "no": yes
-
-    ...
-
-    All done. 
-    Wrote ``seed.sql``.
-
-    Next, run ``make rebuild`` then ``make run`` 
-    (or ``python manage.py runserver``).
+        $ python configure.py
+        
+        ----------
+        Admin User
+        ----------
+        
+        
+        Do you want to set up a superuser?
+    
+        Doing it now means you don't have to re-enter it every time
+        you rebuild the database in development.
+    
+        Please enter "yes" or "no": yes
+        
+        ...
+        
+        All done. 
+        Wrote ``seed.sql``.
+        
+        Next, run ``make rebuild`` then ``make run`` 
+        (or ``python manage.py runserver``).
 
 
 I like using ``Makefiles`` for simple tasks but I'm probably in the minority
