@@ -126,6 +126,8 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'allauthdemo', 'templates'),
 )
 
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 STATICFILES_DIRS = (
