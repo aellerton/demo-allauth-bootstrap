@@ -38,17 +38,23 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'bootstrapform',  # TODO: probably delete this
-    'bootstrap3',
+    'bootstrap3', # optional module for making bootstrap forms easier
 
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+{% if facebook or google %}
+{% if facebook %}
+    'allauth.socialaccount.providers.facebook',  # enabled by configure
+{% endif %}
+{% if google %}
+    'allauth.socialaccount.providers.google',  # enabled by configure
+{% endif %}
     #'allauth.socialaccount.providers.dropbox',
-    'allauth.socialaccount.providers.facebook',
-    'allauth.socialaccount.providers.google',
     #'allauth.socialaccount.providers.github',
     #'allauth.socialaccount.providers.linkedin',
+    # etc
+{% endif %}
 
     'allauthdemo.auth',
     'allauthdemo.demo',

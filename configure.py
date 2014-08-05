@@ -1,9 +1,19 @@
 #!/bin/env
 """Help new users configure the database for use with social networks.
 """
+import os
 from datetime import datetime
 from django.template import Template, Context
-from django.contrib.auth.hashers import make_password
+from django.template.loader import get_template
+#from django.conf.settings import configure as django_configure
+from django.conf import settings
+
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
+settings.configure(DEBUG=True, TEMPLATE_DEBUG=True,
+    TEMPLATE_DIRS=(os.path.join(BASE_DIR, 'allauthdemo'),)
+)
+
 
 sql_template = Template("""
 UPDATE django_site SET DOMAIN = '127.0.0.1:8000', name = 'allauthdemo' WHERE id=1;
@@ -46,6 +56,9 @@ INSERT INTO socialaccount_socialapp_sites (socialapp_id, site_id) VALUES (
 {% endif %}
 """)
 
+#settings_template = Template(open("allauthdemo/settings.template.py").read())
+settings_template = get_template("settings.template.py")
+
 default_superuser_first_name='The'
 default_superuser_last_name='Admin'
 default_superuser_email='me@admin.test'
@@ -86,6 +99,7 @@ def ask_text(need, default=None):
 
 
 def ask_superuser():
+    from django.contrib.auth.hashers import make_password
     first_name = ask_text("Admin first name", default_superuser_first_name)
     last_name = ask_text("Admin last name", default_superuser_last_name)
     email = ask_text("Admin email", default_superuser_email)
@@ -108,6 +122,7 @@ def ask_google():
 
 
 if __name__ == "__main__":
+
     context = Context({
         'now': str(datetime.now())
     })
@@ -130,6 +145,9 @@ if __name__ == "__main__":
 
     with open('seed.sql', 'w') as out:
         out.write(sql_template.render(context))
+
+    with open('allauthdemo/settings.py', 'w') as out:
+        out.write(settings_template.render(context))
 
     print "\nAll done!\n"
     print "Have a look in seed.sql\n\n"

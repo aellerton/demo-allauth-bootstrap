@@ -5,7 +5,8 @@ A working example of django-allauth with Twitter Bootstrap.
 ## tl;dr
 
 You'll need to do quick setup with providers like Facebook and Google, but
-after that this should "just work", out of the box.
+after that you should have a Django project with user signup and management
+that "just works", out of the box.
 
 ## Objectives
 
@@ -16,57 +17,50 @@ after that this should "just work", out of the box.
 
 ## Getting Running
 
-Approximately:
-
-1. Install Python. I used Python 2.7.5. I really must upgrade to 3.x sometime...
+1. Install Python. I used Python 2.7.5 but you don't have to.
+   I really must upgrade to 3.x sometime...
 
 2. Install a ``virtualenv`` and requirements:
 
+        $ cd demo-allauth-bootstrap
         $ virtualenv mypy
         $ . mypy/bin/activate
         $ pip install -r requirements.txt
-        $ python manage.py syncdb
-        $ python manage.py runserver
 
-At this point you should have a site that allows registration of local users.
+3. Set up and Run:
 
-## Getting Running without Social App Integration
-
-1. Register an app with the Social sites of your choice, such as Google and Facebook.
-   Some notes on that in below.
-
-2. You can generate some seed data with:
-
-        $ python configure.py
-        
-        ----------
-        Admin User
-        ----------
-        
-        
-        Do you want to set up a superuser?
-    
-        Doing it now means you don't have to re-enter it every time
-        you rebuild the database in development.
-    
-        Please enter "yes" or "no": yes
-        
-        ...
-        
-        All done. 
-        Wrote ``seed.sql``.
-        
-        Next, run ``make rebuild`` then ``make run`` 
-        (or ``python manage.py runserver``).
+        $ make configure   # Builds a seed.sql that can be used in `make rebuild`
+        $ make rebuild     # A bit better than `python manage.py syncdb`
+        $ make run         # The same as `python manage.py runserver`
 
 
-I like using ``Makefiles`` for simple tasks but I'm probably in the minority
-these days. In any case, once the seed file is generated you can rebuild your
-database from scratch, clean all the ``pyc`` files and run the server with:
+4. Visit http://127.0.0.1:8000/
 
-    make rebuild clean run
 
-Suggestions on a better approach for seed data are welcome.
+At this point you should have a site that allows registration and
+login of local users. If you enabled Google or Facebook during ``make configure``,
+those destinations should allow you to join and log in to the site.
+
+
+## Some Notes
+
+### A word about seed data
+
+During development I find that I frequently want to erase and rebuild the database,
+and setting up seed data like the admin user and ``Sites`` objects can be tedious.
+There are ways to set this up in code (the ``allauth`` source does this) but I've
+chosen to do it with a SQL file, produced with:
+
+    Makefile --> runs Python configure.py --> produces seed.sql
+
+I want to point out that this use of Makefiles and seed data is nothing to do with
+``allauth``, it's just my hack way of getting set up and running.
+
+
+### A word about Makefiles
+
+If your system doesn't have ``make`` (I'm looking at you, Windows), have a look in
+the ``Makefile`` for what commands to run. It's pretty straightforward.
 
 
 ### Configure Facebook Login

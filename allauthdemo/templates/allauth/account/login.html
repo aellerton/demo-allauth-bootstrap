@@ -14,10 +14,9 @@
       <hr>
 
       <div class="row">
+
+        {% if socialaccount.providers  %}
         <div class="col-md-5 col-lg-5">
-
-          {% if socialaccount.providers  %}
-
           <!--
           This is the raw "real" HTML that facebook recommends.
           Leaving here for reference.
@@ -34,10 +33,10 @@
           </div>
 
           {% include "socialaccount/snippets/login_extra.html" %}
-          {% endif %}
         </div>
+        {% endif %}
 
-        <div class="col-md-7 col-lg-7">
+        <div class="{% if socialaccount.providers %}col-md-7 col-lg-7 {% else %} col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 {% endif %}">
           <form class="login" method="POST" action="{% url 'account_login' %}">
               <span class="pull-right">Not yet a member? <a href="{% url 'account_signup' %}">Join</a></span>
             {% csrf_token %}
