@@ -146,7 +146,7 @@ if __name__ == "__main__":
     with open('seed.sql', 'w') as out:
         out.write(sql_template.render(context))
 
-    with open('allauthdemo/settings.py', 'w') as out:
+    with open('allauthdemo/settings_generated.py', 'w') as out:
         out.write(settings_template.render(context))
 
     print "\nAll done!\n"

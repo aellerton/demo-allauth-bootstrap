@@ -23,4 +23,4 @@ clean:
 	find . -name "*.pyc" -print0 | xargs -0 rm
 
 veryclean: deldb clean
-	rm -f allauthdemo/settings.py  # generated file
+	rm -f allauthdemo/settings_generated.py
