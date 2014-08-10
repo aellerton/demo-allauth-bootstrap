@@ -88,7 +88,8 @@ which is basically:
 
 6. For Authorized Redirect Url: http://127.0.0.1:8000/accounts/google/login/callback/
 
-Copy the Client ID and secret to SQL config in this repo and put into the database.
+Run ``make configure``, enter the details, then ``make rebuild`` and ``make run``.
+Alternatively edit the ``seed.sql`` file from a previous run and then ``make rebuild run``.
 
 
 ## How I built this
