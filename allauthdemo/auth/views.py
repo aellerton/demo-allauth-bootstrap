@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+
 
 from django.contrib import messages
 from django.views.generic.base import TemplateResponseMixin, View

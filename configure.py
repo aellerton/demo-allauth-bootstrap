@@ -8,6 +8,10 @@ from django.template.loader import get_template
 #from django.conf.settings import configure as django_configure
 from django.conf import settings
 
+# Fix Python 2.x.
+try: input = raw_input
+except NameError: pass
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 settings.configure(DEBUG=True, TEMPLATE_DEBUG=True,
@@ -67,16 +71,16 @@ default_superuser_email='me@admin.test'
 def heading(text):
     text = text.strip()
     line = '-' * len(text)
-    print "\n%s\n%s\n%s\n" % (line, text, line)
+    print("\n%s\n%s\n%s\n" % (line, text, line))
 
 
 def ask_yes_no(msg):
     msg = "\n" + msg.strip()+'\n\nPlease enter "yes" or "no": '
-    confirm = raw_input(msg)
+    confirm = input(msg)
     while True:
         confirm = confirm.strip().lower()
         if confirm not in ('yes', 'y', 'no', 'n'):
-            confirm = raw_input('Please enter either "yes" or "no": ')
+            confirm = input('Please enter either "yes" or "no": ')
             continue
         return confirm in ('yes', 'y')
 
@@ -89,7 +93,7 @@ def ask_text(need, default=None):
         msg = "\n%s? > " % need
 
     while True:
-        response = raw_input(msg)
+        response = input(msg)
         if response:
             return response
         elif default is not None:
@@ -149,7 +153,7 @@ if __name__ == "__main__":
     with open('allauthdemo/settings_generated.py', 'w') as out:
         out.write(settings_template.render(context))
 
-    print "\nAll done!\n"
-    print "Have a look in seed.sql\n\n"
-    print "Next:\n  make rebuild\n  make run  (or ``python manage.py runserver``)"
+    print("\nAll done!\n")
+    print("Have a look in seed.sql\n\n")
+    print("Next:\n  make rebuild\n  make run  (or ``python manage.py runserver``)")
 

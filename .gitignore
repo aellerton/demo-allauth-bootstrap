@@ -8,4 +8,5 @@
 .idea
 DEL
 *.sql
-mypy
+*.bak
+mypy*

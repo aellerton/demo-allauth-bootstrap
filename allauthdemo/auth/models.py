@@ -49,7 +49,7 @@ class DemoUser(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
-        db_table = u'auth_user'
+        db_table = 'auth_user'
         abstract = False
 
     def get_absolute_url(self):
@@ -125,7 +125,7 @@ class UserProfile(models.Model):
         return force_text(self.user.email)
 
     class Meta():
-        db_table = u'user_profile'
+        db_table = 'user_profile'
 
 
 @receiver(user_signed_up)
@@ -147,7 +147,7 @@ def set_initial_user_names(request, user, sociallogin=None, **kwargs):
     preferred_avatar_size_pixels=256
 
     picture_url = "http://www.gravatar.com/avatar/{0}?s={1}".format(
-        hashlib.md5(user.email).hexdigest(),
+        hashlib.md5(user.email.encode('UTF-8')).hexdigest(),
         preferred_avatar_size_pixels
     )
  
