@@ -17,8 +17,7 @@ that "just works", out of the box.
 
 ## Getting Running
 
-1. Install Python. I used Python 2.7.5 but you don't have to.
-   I really must upgrade to 3.x sometime...
+1. Install Python. I used Python 2.7.5 but Python 3 works too.
 
 2. Install a ``virtualenv`` and requirements:
 
@@ -26,6 +25,9 @@ that "just works", out of the box.
         $ virtualenv mypy
         $ . mypy/bin/activate
         $ pip install -r requirements.txt
+
+   Note that Django 1.6.5 is set in ``requirements.txt`` but it works with
+   Django 1.7 too.
 
 3. Set up and Run:
 
