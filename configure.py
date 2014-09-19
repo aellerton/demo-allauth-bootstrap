@@ -3,14 +3,13 @@
 """
 import os
 from datetime import datetime
-from django.template import Template, Context
-from django.template.loader import get_template
-#from django.conf.settings import configure as django_configure
-from django.conf import settings
 
 # Fix Python 2.x.
 try: input = raw_input
 except NameError: pass
+
+import django
+from django.conf import settings
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -18,6 +17,15 @@ settings.configure(DEBUG=True, TEMPLATE_DEBUG=True,
     TEMPLATE_DIRS=(os.path.join(BASE_DIR, 'allauthdemo'),)
 )
 
+try:
+    django.setup()  # for Django >= 1.7
+except AttributeError:
+    pass  # must be < Django 1.7
+
+
+from django.template import Template, Context
+from django.template.loader import get_template
+#from django.conf.settings import configure as django_configure
 
 sql_template = Template("""
 UPDATE django_site SET DOMAIN = '127.0.0.1:8000', name = 'allauthdemo' WHERE id=1;
