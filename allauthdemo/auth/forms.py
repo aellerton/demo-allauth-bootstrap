@@ -1,5 +1,3 @@
-
-
 from django import forms
 from django.core.validators import MinLengthValidator
 
@@ -29,6 +27,7 @@ class DemoUserAdminForm(forms.ModelForm):
 
     class Meta:
         model = DemoUser
+        fields = ('email', 'first_name', 'last_name', 'display_name', 'is_staff', 'is_active', 'date_joined')
 
     def is_valid(self):
         #log.info(force_text(self.errors))
