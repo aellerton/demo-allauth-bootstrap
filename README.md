@@ -58,6 +58,9 @@ chosen to do it with a SQL file, produced with:
 I want to point out that this use of Makefiles and seed data is nothing to do with
 ``allauth``, it's just my hack way of getting set up and running.
 
+You can edit ``seed.sql`` then destroy and rebuild your database easily with this:
+
+    make rebuild
 
 ### A word about Makefiles
 
