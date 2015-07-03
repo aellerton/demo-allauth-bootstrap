@@ -26,9 +26,6 @@ that "just works", out of the box.
         $ . mypy/bin/activate
         $ pip install -r requirements.txt
 
-   Note that Django 1.6.5 is set in ``requirements.txt`` but it works with
-   Django 1.7 too.
-
 3. Set up and Run:
 
         $ make configure   # Builds a seed.sql that can be used in `make rebuild`
