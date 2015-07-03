@@ -1,4 +1,4 @@
-django==1.6.5  # works with 1.7
+django==1.8.1
 django-allauth
 django-uuidfield  # you don't have to use uuids, but I choose to.
 django-bootstrap3  # allauth doesn't require this but again I chose to.
