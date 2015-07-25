@@ -1,6 +1,8 @@
 # demo-allauth-bootstrap
 
-A working example of django-allauth with Twitter Bootstrap.
+An out-of-the-box working example of [django-allauth](https://github.com/pennersr/django-allauth)
+using Twitter Bootstrap and showing some basic functionality like grabbing user name and profile
+picture at signup.
 
 ## tl;dr
 
@@ -17,7 +19,7 @@ that "just works", out of the box.
 
 ## Getting Running
 
-1. Install Python. I used Python 2.7.5 but Python 3 works too.
+1. Install Python. I used Python 3.4.3 at the moment but 2.7.x works fine too.
 
 2. Install a ``virtualenv`` and requirements:
 

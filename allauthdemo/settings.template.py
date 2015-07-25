@@ -109,28 +109,39 @@ AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend",
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.media",
-    "django.core.context_processors.static",
-    "django.core.context_processors.request",
-    "django.contrib.messages.context_processors.messages",
-    "allauth.account.context_processors.account",
-    "allauth.socialaccount.context_processors.socialaccount",
-)
-
-TEMPLATE_DIRS = (
-    # allauth templates: you could copy this directory into your
-    # project and tweak it according to your needs
-    # os.path.join(PROJECT_ROOT, 'templates', 'uniform', 'allauth'),
-    # example project specific templates
-    os.path.join(BASE_DIR, 'allauthdemo', 'templates', 'plain', 'example'),
-    #os.path.join(BASE_DIR, 'allauthdemo', 'templates', 'bootstrap', 'allauth'),
-    os.path.join(BASE_DIR, 'allauthdemo', 'templates', 'allauth'),
-    os.path.join(BASE_DIR, 'allauthdemo', 'templates'),
-)
+TEMPLATES = [
+    {
+    'BACKEND': 'django.template.backends.django.DjangoTemplates',
+    'DIRS': [
+        # allauth templates: you could copy this directory into your
+        # project and tweak it according to your needs
+        # os.path.join(PROJECT_ROOT, 'templates', 'uniform', 'allauth'),
+        # example project specific templates
+        os.path.join(BASE_DIR, 'allauthdemo', 'templates', 'plain', 'example'),
+        #os.path.join(BASE_DIR, 'allauthdemo', 'templates', 'bootstrap', 'allauth'),
+        os.path.join(BASE_DIR, 'allauthdemo', 'templates', 'allauth'),
+        os.path.join(BASE_DIR, 'allauthdemo', 'templates'),
+    ],
+    'APP_DIRS': True,
+    'OPTIONS': {
+        'context_processors': [
+            # needed for admin templates
+            'django.contrib.auth.context_processors.auth',
+            # these *may* not be needed
+            'django.template.context_processors.debug',
+            'django.template.context_processors.i18n',
+            'django.template.context_processors.media',
+            'django.template.context_processors.static',
+            'django.contrib.messages.context_processors.messages',
+            # allauth needs this from django
+            'django.template.context_processors.request',
+            # allauth specific context processors
+            #'allauth.account.context_processors.account',
+            #'allauth.socialaccount.context_processors.socialaccount',
+          ],
+       },
+    }
+]
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 

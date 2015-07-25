@@ -2,54 +2,40 @@
 
 {% load i18n %}
 {% load bootstrap3 %}
-{% load account %}
+{% load account socialaccount %}
 
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 
 {% block inner-content %}
+{% get_providers as socialaccount_providers %}
 
-      <h1 class="text-center">Log In</h1>
-      <hr>
+<h1 class="text-center">Log In</h1>
+<hr>
 
-      <div class="row">
+<div class="row">
 
-        {% if socialaccount.providers  %}
-        <div class="col-md-5 col-lg-5">
-          <!--
-          This is the raw "real" HTML that facebook recommends.
-          Leaving here for reference.
+  {% if socialaccount_providers  %}
+  <div class="col-md-5 col-lg-5">
+    {% include "allauth/account/provider_panel.html" with process="login" %}
+  </div>
+  {% endif %}
 
-          <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="false"></div>
-          -->
-
-          <div class="socialaccount_ballot">
-            <ul class="socialaccount_providers list-unstyled">
-              {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-            </ul>
-
-            <div class="login-or">{% trans 'or' %}</div>
-          </div>
-
-          {% include "socialaccount/snippets/login_extra.html" %}
-        </div>
-        {% endif %}
-
-        <div class="{% if socialaccount.providers %}col-md-7 col-lg-7 {% else %} col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 {% endif %}">
-          <form class="login" method="POST" action="{% url 'account_login' %}">
-              <span class="pull-right">Not yet a member? <a href="{% url 'account_signup' %}">Join</a></span>
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            {% if redirect_field_value %}
-            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-            {% endif %}
-            <div class="form-actions">
-              <button class="btn btn-primary pull-right" type="submit">{% trans "Sign In" %}</button>
-              <a class="btn" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-            </div>
-          </form>
-        </div>
+  <div class="{% if socialaccount_providers %}col-md-7 col-lg-7 {% else %} col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 {% endif %}">
+    <form class="login" method="POST" action="{% url 'account_login' %}">
+      <span class="pull-right">Not yet a member? <a href="{% url 'account_signup' %}">Join</a></span>
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+      {% endif %}
+      <div class="form-actions">
+        <button class="btn btn-primary pull-right" type="submit">{% trans "Sign In" %}</button>
+        <a class="btn" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
       </div>
+    </form>
+  </div>
+</div>
 
 {% endblock %}
 

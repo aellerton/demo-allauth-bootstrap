@@ -1,0 +1,22 @@
+{% load i18n %}
+{% load bootstrap3 %}
+{% load account socialaccount %}
+
+{% get_providers as socialaccount_providers %}
+{% if socialaccount_providers  %}
+  <!--
+  This is the raw "real" HTML that facebook recommends.
+  Leaving here for reference.
+
+  <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="false"></div>
+  -->
+
+  <div class="socialaccount_ballot">
+    <ul class="socialaccount_providers list-unstyled">
+      {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+    </ul>
+
+  </div>
+
+  {% include "socialaccount/snippets/login_extra.html" %}
+{% endif %}
