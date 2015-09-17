@@ -15,6 +15,27 @@ except ImportError:
 from allauth.account.signals import user_signed_up
 
 
+class MyUserManager(UserManager):
+    """
+    Custom User Model manager.
+
+    It overrides default User Model manager's create_user() and create_superuser,
+    which requires username field.
+    """
+
+    def create_user(self, email, password=None, **kwargs):
+        user = self.model(email=email, **kwargs)
+        user.set_password(password)
+        user.save()
+        return user
+
+    def create_superuser(self, email, password, **kwargs):
+        user = self.model(email=email, is_staff=True, is_superuser=True, **kwargs)
+        user.set_password(password)
+        user.save()
+        return user
+
+
 class DemoUser(AbstractBaseUser, PermissionsMixin):
     """A site-specific user model.
 
@@ -41,7 +62,7 @@ class DemoUser(AbstractBaseUser, PermissionsMixin):
                     'active. Unselect this instead of deleting accounts.'))
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
-    objects = UserManager()
+    objects = MyUserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
