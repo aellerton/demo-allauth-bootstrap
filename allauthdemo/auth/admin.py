@@ -44,7 +44,7 @@ class DemoUserAdmin(UserAdmin):
 
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        (_('Personal info'), {'fields': ('first_name', 'last_name', 'display_name')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'username')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
@@ -54,11 +54,11 @@ class DemoUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2')}
+            'fields': ('email', 'username' , 'password1', 'password2')}
         ),
     )
-    list_display = ('email', 'first_name', 'last_name', 'display_name', 'is_staff')
-    search_fields = ('first_name', 'last_name', 'display_name', 'email')
+    list_display = ('email', 'first_name', 'last_name', 'username', 'is_staff')
+    search_fields = ('first_name', 'last_name', 'username', 'email')
     ordering = ('email',)
 
     form = DemoUserAdminForm

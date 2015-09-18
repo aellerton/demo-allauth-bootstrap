@@ -50,10 +50,10 @@ class DemoUser(AbstractBaseUser, PermissionsMixin):
     Remember to change ``AUTH_USER_MODEL`` in ``settings.py``.
     """
 
-    email = models.EmailField(_('email address'), blank=False, unique=True)
+    email = models.EmailField(_('email address'), blank=True, unique=True)
     first_name = models.CharField(_('first name'), max_length=40, blank=True, null=True, unique=False)
     last_name = models.CharField(_('last name'), max_length=40, blank=True, null=True, unique=False)
-    display_name = models.CharField(_('display name'), max_length=14, blank=True, null=True, unique=False)
+    username = models.CharField(_('display name'), max_length=14, blank=True, null=True, unique=False)
     is_staff = models.BooleanField(_('staff status'), default=False,
         help_text=_('Designates whether the user can log into this admin '
                     'site.'))
@@ -65,7 +65,7 @@ class DemoUser(AbstractBaseUser, PermissionsMixin):
     objects = MyUserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username']
 
     class Meta:
         verbose_name = _('user')
@@ -81,8 +81,8 @@ class DemoUser(AbstractBaseUser, PermissionsMixin):
     def name(self):
         if self.first_name:
             return self.first_name
-        elif self.display_name:
-            return self.display_name
+        elif self.username:
+            return self.username
         return 'You'
 
     def get_full_name(self):
@@ -98,7 +98,7 @@ class DemoUser(AbstractBaseUser, PermissionsMixin):
 
     def guess_display_name(self):
         """Set a display name, if one isn't already set."""
-        if self.display_name:
+        if self.username:
             return
 
         if self.first_name and self.last_name:
@@ -107,7 +107,7 @@ class DemoUser(AbstractBaseUser, PermissionsMixin):
             dn = self.first_name
         else:
             dn = 'You'
-        self.display_name = dn.strip()
+        self.username = dn.strip()
 
     def email_user(self, subject, message, from_email=None):
         """
