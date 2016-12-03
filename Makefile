@@ -5,13 +5,15 @@ DATABASE_NAME=db.sqlite3
 configure:
 	python configure.py
 
-rebuild: deldb syncdb initdb
+rebuild: deldb migratedb initdb
 
 deldb:
 	rm -f $(DATABASE_NAME)
+	rm -rf allauthdemo/auth/migrations/
 
-syncdb:
-	python manage.py syncdb --noinput
+migratedb:
+	python manage.py makemigrations allauthdemo_auth  # important for auth_user table
+	python manage.py migrate
 
 initdb:
 	sqlite3 $(DATABASE_NAME) < seed.sql

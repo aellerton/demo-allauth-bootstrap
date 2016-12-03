@@ -1,8 +1,8 @@
 # demo-allauth-bootstrap
 
-An out-of-the-box working example of [django-allauth](https://github.com/pennersr/django-allauth)
-using Twitter Bootstrap and showing some basic functionality like grabbing user name and profile
-picture at signup.
+An out-of-the-box working example of [django-allauth] using Twitter
+Bootstrap and showing some basic functionality like grabbing user name
+and profile picture at signup.
 
 ## tl;dr
 
@@ -29,6 +29,9 @@ that "just works", out of the box.
         $ pip install -r requirements.txt
 
 3. Set up and Run:
+
+   I used a ``Makefile``. You don't have to. You can look inside the ``Makefile``
+   and see how it's run.
 
         $ make configure   # Builds a seed.sql that can be used in `make rebuild`
         $ make rebuild     # A bit better than `python manage.py syncdb`
@@ -69,16 +72,17 @@ the ``Makefile`` for what commands to run. It's pretty straightforward.
 
 ### Configure Facebook Login
 
-Sarah describes this well here:
-http://www.sarahhagstrom.com/2013/09/the-missing-django-allauth-tutorial/#Create_and_configure_a_Facebook_app
+Sarah describes this nicely in [her article][2]
 
 Aside from UI changes, the method she described worked well.
 
+Go to [facebook-developer-settings].
 
 ### Configure Google Login
 
-To set up Google, follow instructions at https://developers.google.com/+/api/oauth#login-scopes,
+To set up Google, follow the [Google oauth instructions][3] or [this help answer][4]
 which is basically:
+
 
 1. Go to https://console.developers.google.com/
 
@@ -141,4 +145,10 @@ In no order:
 
 * The default allauth rendering for profile (email, social accounts etc) is adequate but
   could do with some work.
+
+
+[django-allauth]: https://github.com/pennersr/django-allauth
+[2]: http://www.sarahhagstrom.com/2013/09/the-missing-django-allauth-tutorial/#Create_and_configure_a_Facebook_app
+[3]: https://developers.google.com/+/web/api/rest/oauth#login-scopes
+[facebook-developer-settings]: https://developers.facebook.com/
 

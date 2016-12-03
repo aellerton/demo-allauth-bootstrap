@@ -13,8 +13,17 @@ from django.conf import settings
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-settings.configure(DEBUG=True, TEMPLATE_DEBUG=True,
-    TEMPLATE_DIRS=(os.path.join(BASE_DIR, 'allauthdemo'),)
+# TEMPLATES structure changed in Django 1.10
+settings.configure(
+    DEBUG = True,
+    TEMPLATES = [dict(
+        #DEBUG = True,
+        BACKEND = 'django.template.backends.django.DjangoTemplates',
+        APP_DIRS = True,
+        DIRS = [
+            os.path.join(BASE_DIR, 'allauthdemo'),
+        ],
+    )],
 )
 
 try:
@@ -22,10 +31,8 @@ try:
 except AttributeError:
     pass  # must be < Django 1.7
 
-
 from django.template import Template, Context
 from django.template.loader import get_template
-#from django.conf.settings import configure as django_configure
 
 sql_template = Template("""
 UPDATE django_site SET DOMAIN = '127.0.0.1:8000', name = 'allauthdemo' WHERE id=1;
@@ -50,7 +57,6 @@ DELETE FROM socialaccount_socialapp_sites;
 DELETE FROM socialaccount_socialapp WHERE provider='facebook';
 INSERT INTO socialaccount_socialapp (provider, name, secret, client_id, `key`)
 VALUES ("facebook", "Facebook", "{{facebook.secret}}", "{{facebook.client_id}}", '');
-
 INSERT INTO socialaccount_socialapp_sites (socialapp_id, site_id) VALUES (
   (SELECT id FROM socialaccount_socialapp WHERE provider='facebook'),1);
 {% endif %}
@@ -62,11 +68,11 @@ INSERT INTO socialaccount_socialapp_sites (socialapp_id, site_id) VALUES (
 DELETE FROM socialaccount_socialapp WHERE provider='google';
 INSERT INTO socialaccount_socialapp (provider, name, secret, client_id, `key`)
 VALUES ("google", "Google", "{{ google.secret }}", "{{ google.client_id}}", '');
-
 INSERT INTO socialaccount_socialapp_sites (socialapp_id, site_id) VALUES (
   (SELECT id FROM socialaccount_socialapp WHERE provider='google'),1);
 {% endif %}
 """)
+
 
 #settings_template = Template(open("allauthdemo/settings.template.py").read())
 settings_template = get_template("settings.template.py")

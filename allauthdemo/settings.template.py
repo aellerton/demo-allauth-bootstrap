@@ -22,8 +22,6 @@ SECRET_KEY = '!h8#n5wopc#7zq!_)i=l#t=q)7g0g-+&0!=kxv+*&2b7*xb8bm'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = True
-
 ALLOWED_HOSTS = []
 
 
@@ -61,6 +59,7 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -111,6 +110,7 @@ AUTHENTICATION_BACKENDS = (
 
 TEMPLATES = [
     {
+    #'TEMPLATE_DEBUG': True,
     'BACKEND': 'django.template.backends.django.DjangoTemplates',
     'DIRS': [
         # allauth templates: you could copy this directory into your
@@ -132,6 +132,7 @@ TEMPLATES = [
             'django.template.context_processors.i18n',
             'django.template.context_processors.media',
             'django.template.context_processors.static',
+            'django.template.context_processors.tz',
             'django.contrib.messages.context_processors.messages',
             # allauth needs this from django
             'django.template.context_processors.request',
