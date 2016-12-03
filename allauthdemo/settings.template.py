@@ -164,4 +164,14 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 SOCIALACCOUNT_AUTO_SIGNUP = False  # require social accounts to use the signup form ... I think
 # For custom sign-up form:
 # http://stackoverflow.com/questions/12303478/how-to-customize-user-profile-when-using-django-allauth
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'SCOPE': ['email'],  #, 'publish_stream'],
+        'METHOD': 'oauth2'  # 'js_sdk'  # instead of 'oauth2'
+    },
+    'google':
+        { 'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': { 'access_type': 'online' }
+    },
+}
 

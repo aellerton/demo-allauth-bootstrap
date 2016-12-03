@@ -17,6 +17,24 @@ that "just works", out of the box.
 2. Help remind me how a basic site hangs together ;)
 
 
+## Tips before you run this
+
+Set up one or both of Facebook and Google as developer apps.
+
+Tips for Facebook:
+- You'll need the Facebook App ID (NOT any client ID) and the secret.
+- Repeat, the Facebook App ID and NOT any client ID is what should be entered
+  for "client ID"
+- Create an app in the [facebook-developer-settings] area and then create a test app
+  from that. The test app seems to be the only thing that will work with a
+  localhost Django app.
+- Read the [article by Sarah][2] or see below for moe.
+
+Tips for Google:
+- You'll need the Google client ID and secret.
+
+
+
 ## Getting Running
 
 1. Install Python. I used Python 3.4.3 at the moment but 2.7.x works fine too.
