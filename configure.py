@@ -128,14 +128,14 @@ def ask_superuser():
 
 
 def ask_facebook():
-    secret = ask_text("Facebook secret")
-    client_id = ask_text("Facebook client id")
+    secret = ask_text("Facebook App Secret")
+    client_id = ask_text("Facebook App ID (not client token)")
     return dict(secret=secret, client_id=client_id)
 
 
 def ask_google():
-    secret = ask_text("Google secret")
-    client_id = ask_text("Google client id")
+    secret = ask_text("Google Secret")
+    client_id = ask_text("Google Client ID")
     return dict(secret=secret, client_id=client_id)
 
 
