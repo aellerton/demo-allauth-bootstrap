@@ -63,6 +63,13 @@ At this point you should have a site that allows registration and
 login of local users. If you enabled Google or Facebook during ``make configure``,
 those destinations should allow you to join and log in to the site.
 
+*Note*: You should decide now which URL you'll use for your development site.
+You can make it 127.0.0.1:8000, localhost:8000, change the port, even enter an entry
+in ``/etc/hosts`` (if you're on OSX, Linux, etc) and call it local.anything.com, etc.
+Once you've chosen it, stick to it. After you start entering URLs in social providers
+like Facebook and Google it gets annoying.
+
+From now on I'll assume you're using ``http://127.0.0.1:8000``.
 
 ## Some Notes
 
@@ -113,7 +120,8 @@ Aside from UI changes, the method she described worked well.
   ``http://127.0.0.1:8000/accounts/facebook/``
   ``http://127.0.0.1:8000/accounts/facebook/login/callback/``
 
-  You can also add the same but "http://localhost:8000/..." but you don't have to, the ``127.0.0.1`` IP address works fine.
+  Note: If you're loading your site with ``localhost:8000`` you should use "http://localhost:8000/..." 
+  above. Whichever you choose, do it consistently and you should be ok.
 
 Note: The "app secret" and "client id" are a bit confusing with Facebook.  
 You want to record the "Facebook App Secret" and the "Facebook App ID". The latter
@@ -138,6 +146,9 @@ which is basically:
 5. For Authorized Javascript Origins: http://127.0.0.1:8000
 
 6. For Authorized Redirect Url: http://127.0.0.1:8000/accounts/google/login/callback/
+
+Again, a reminder that if you're loading your site at ``localhost:8000`` then you'll need to set the
+URIs above to ``http://localhost:8000/..." etc.
 
 Run ``make configure``, enter the details, then ``make rebuild`` and ``make run``.
 Alternatively edit the ``seed.sql`` file from a previous run and then ``make rebuild run``.
