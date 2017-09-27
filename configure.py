@@ -32,9 +32,10 @@ except AttributeError:
     pass  # must be < Django 1.7
 
 from django.template import Template, Context
-from django.template.loader import get_template
+from django.template.loader import get_template, render_to_string
+from django.template import engines  # Django >= 1.11
 
-sql_template = Template("""
+sql_template = engines['django'].from_string("""
 UPDATE django_site SET DOMAIN = '127.0.0.1:8000', name = 'allauthdemo' WHERE id=1;
 
 {% if admin %}
@@ -73,8 +74,6 @@ INSERT INTO socialaccount_socialapp_sites (socialapp_id, site_id) VALUES (
 {% endif %}
 """)
 
-
-#settings_template = Template(open("allauthdemo/settings.template.py").read())
 settings_template = get_template("settings.template.py")
 
 default_superuser_first_name='The'
@@ -141,9 +140,9 @@ def ask_google():
 
 if __name__ == "__main__":
 
-    context = Context({
+    context = {
         'now': str(datetime.now())
-    })
+    }
 
     heading("Admin User")
     if ask_yes_no("Do you want to set up a superuser?\n\n"
@@ -162,10 +161,10 @@ if __name__ == "__main__":
         context['google'] = ask_google()
 
     with open('seed.sql', 'w') as out:
-        out.write(sql_template.render(context))
+        out.write(sql_template.render(context, request=None))
 
     with open('allauthdemo/settings_generated.py', 'w') as out:
-        out.write(settings_template.render(context))
+        out.write(settings_template.render(context, request=None))
 
     print("\nAll done!\n")
     print("Have a look in seed.sql\n\n")

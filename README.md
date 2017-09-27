@@ -37,12 +37,12 @@ Tips for Google:
 
 ## Getting Running
 
-1. Install Python. I used Python 3.4.3 at the moment but 2.7.x works fine too.
+1. Install Python. I used Python 3.6 at the moment but 2.7.x works fine too.
 
 2. Install a ``virtualenv`` and requirements:
 
         $ cd demo-allauth-bootstrap
-        $ virtualenv mypy
+        $ python3 -m virtualenv mypy       # or: virtualenv mypy
         $ . mypy/bin/activate
         $ pip install -r requirements.txt
 
