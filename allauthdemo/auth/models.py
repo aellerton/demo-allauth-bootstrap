@@ -36,8 +36,8 @@ class MyUserManager(UserManager):
         return user
 
 
-class DemoUser(AbstractBaseUser, PermissionsMixin):
-    """A site-specific user model.
+class User(AbstractBaseUser, PermissionsMixin):
+    """User instances represent a user on this site.
 
     Important: You don't have to use a custom user model. I did it here because
     I didn't want a username to be part of the system and I wanted other data
@@ -93,7 +93,6 @@ class DemoUser(AbstractBaseUser, PermissionsMixin):
         return full_name.strip()
 
     def get_short_name(self):
-        "Returns the short name for the user."
         return self.first_name
 
     def guess_display_name(self):
@@ -131,7 +130,7 @@ class UserProfile(models.Model):
     profile information you might create additional profile classes, like
     say UserGeologistProfile.
     """
-    user = models.OneToOneField(DemoUser, primary_key=True, verbose_name='user', related_name='profile')
+    user = models.OneToOneField(User, primary_key=True, verbose_name='user', related_name='profile', on_delete=models.CASCADE)
 
     # I oscillate between whether the ``avatar_url`` should be
     # a) in the User model

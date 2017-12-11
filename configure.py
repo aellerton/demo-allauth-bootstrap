@@ -5,22 +5,25 @@ import os
 from datetime import datetime
 
 # Fix Python 2.x.
-try: input = raw_input
-except NameError: pass
+try:
+    input = raw_input
+except NameError:
+    pass
 
 import django
 from django.conf import settings
+from django.core.management.utils import get_random_secret_key
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # TEMPLATES structure changed in Django 1.10
 settings.configure(
-    DEBUG = True,
-    TEMPLATES = [dict(
-        #DEBUG = True,
-        BACKEND = 'django.template.backends.django.DjangoTemplates',
-        APP_DIRS = True,
-        DIRS = [
+    DEBUG=True,
+    TEMPLATES=[dict(
+        # DEBUG = True,
+        BACKEND='django.template.backends.django.DjangoTemplates',
+        APP_DIRS=True,
+        DIRS=[
             os.path.join(BASE_DIR, 'allauthdemo'),
         ],
     )],
@@ -31,54 +34,24 @@ try:
 except AttributeError:
     pass  # must be < Django 1.7
 
-from django.template import Template, Context
-from django.template.loader import get_template, render_to_string
+from django.template.loader import get_template
 from django.template import engines  # Django >= 1.11
 
-sql_template = engines['django'].from_string("""
-UPDATE django_site SET DOMAIN = '127.0.0.1:8000', name = 'allauthdemo' WHERE id=1;
+commands_template = engines['django'].from_string("""
+Run these commands:
 
-{% if admin %}
-DELETE from auth_user;  -- or just the first user?
-INSERT INTO auth_user(id, password, last_login, is_superuser, first_name, last_name, email, is_staff, is_active, date_joined)
-VALUES (1, '{{admin.password}}', '{{now}}', 1, '{{admin.first_name}}', '{{admin.last_name}}', '{{admin.email}}', 1, 1, '{{now}}');
-{% endif %}
+    python manage.py makemigrations allauthdemo_auth
+    python manage.py migrate
+    python manage.py createsuperuser
+    {% if facebook %}# Facebook
+    python manage.py set_auth_provider facebook {{facebook.client_id}} {{facebook.secret}}{% endif %}
+    {% if google %}# Google
+    python manage.py set_auth_provider google {{google.client_id}} {{google.secret}}{% endif %}
 
-{% if facebook or google %}
---
--- Prep for socialapp_sites
---
-DELETE FROM socialaccount_socialapp_sites;
-{% endif %}
-
-{% if facebook %}
---
--- Facebook
---
-DELETE FROM socialaccount_socialapp WHERE provider='facebook';
-INSERT INTO socialaccount_socialapp (provider, name, secret, client_id, `key`)
-VALUES ("facebook", "Facebook", "{{facebook.secret}}", "{{facebook.client_id}}", '');
-INSERT INTO socialaccount_socialapp_sites (socialapp_id, site_id) VALUES (
-  (SELECT id FROM socialaccount_socialapp WHERE provider='facebook'),1);
-{% endif %}
-
-{% if google %}
---
--- Google
---
-DELETE FROM socialaccount_socialapp WHERE provider='google';
-INSERT INTO socialaccount_socialapp (provider, name, secret, client_id, `key`)
-VALUES ("google", "Google", "{{ google.secret }}", "{{ google.client_id}}", '');
-INSERT INTO socialaccount_socialapp_sites (socialapp_id, site_id) VALUES (
-  (SELECT id FROM socialaccount_socialapp WHERE provider='google'),1);
-{% endif %}
+If you have other providers you can add them in that way.
 """)
 
 settings_template = get_template("settings.template.py")
-
-default_superuser_first_name='The'
-default_superuser_last_name='Admin'
-default_superuser_email='me@admin.test'
 
 
 def heading(text):
@@ -88,7 +61,7 @@ def heading(text):
 
 
 def ask_yes_no(msg):
-    msg = "\n" + msg.strip()+'\n\nPlease enter "yes" or "no": '
+    msg = "\n" + msg.strip() + '\n\nPlease enter "yes" or "no": '
     confirm = input(msg)
     while True:
         confirm = confirm.strip().lower()
@@ -112,18 +85,7 @@ def ask_text(need, default=None):
         elif default is not None:
             return default
         else:
-            pass # raw_input('Please enter a value.')
-
-
-def ask_superuser():
-    from django.contrib.auth.hashers import make_password
-    first_name = ask_text("Admin first name", default_superuser_first_name)
-    last_name = ask_text("Admin last name", default_superuser_last_name)
-    email = ask_text("Admin email", default_superuser_email)
-    password = ask_text("Admin password")
-    password = make_password(password)
-
-    return dict(first_name=first_name, last_name=last_name, email=email, password=password)
+            pass  # raw_input('Please enter a value.')
 
 
 def ask_facebook():
@@ -141,14 +103,9 @@ def ask_google():
 if __name__ == "__main__":
 
     context = {
-        'now': str(datetime.now())
+        'now': str(datetime.now()),
+        'secret_key': get_random_secret_key(),
     }
-
-    heading("Admin User")
-    if ask_yes_no("Do you want to set up a superuser?\n\n"
-                  "Doing it now means you don't have to re-enter it every time\n"
-                  "you rebuild the database in development."):
-        context['admin'] = ask_superuser()
 
     heading("Facebook")
     if ask_yes_no("Do you want to configure auth via Facebook?\n"
@@ -160,13 +117,11 @@ if __name__ == "__main__":
                   "You'll need the app secret and client."):
         context['google'] = ask_google()
 
-    with open('seed.sql', 'w') as out:
-        out.write(sql_template.render(context, request=None))
-
-    with open('allauthdemo/settings_generated.py', 'w') as out:
+    heading("Rendering settings...")
+    with open('allauthdemo/settings.py', 'w') as out:
         out.write(settings_template.render(context, request=None))
+    print("OK")
 
-    print("\nAll done!\n")
-    print("Have a look in seed.sql\n\n")
-    print("Next:\n  make rebuild\n  make run  (or ``python manage.py runserver``)")
-
+    heading("Next steps")
+    print(commands_template.render(context, request=None))
+    heading("Done")

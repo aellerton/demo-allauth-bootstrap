@@ -8,16 +8,17 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+from os.path import dirname, join
+
+
+BASE_DIR = dirname(dirname(__file__))
 
 
 # Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
+# See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '!h8#n5wopc#7zq!_)i=l#t=q)7g0g-+&0!=kxv+*&2b7*xb8bm'
+SECRET_KEY = '{{ secret_key }}'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -26,7 +27,6 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -58,7 +58,7 @@ INSTALLED_APPS = (
     'allauthdemo.demo',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -66,7 +66,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-)
+]
 
 ROOT_URLCONF = 'allauthdemo.urls'
 
@@ -74,17 +74,17 @@ WSGI_APPLICATION = 'allauthdemo.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/1.6/ref/settings/#databases
+# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
 # Internationalization
-# https://docs.djangoproject.com/en/1.6/topics/i18n/
+# https://docs.djangoproject.com/en/2.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -98,7 +98,7 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.6/howto/static-files/
+# https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
 
@@ -115,12 +115,12 @@ TEMPLATES = [
     'DIRS': [
         # allauth templates: you could copy this directory into your
         # project and tweak it according to your needs
-        # os.path.join(PROJECT_ROOT, 'templates', 'uniform', 'allauth'),
+        # join(PROJECT_ROOT, 'templates', 'uniform', 'allauth'),
         # example project specific templates
-        os.path.join(BASE_DIR, 'allauthdemo', 'templates', 'plain', 'example'),
-        #os.path.join(BASE_DIR, 'allauthdemo', 'templates', 'bootstrap', 'allauth'),
-        os.path.join(BASE_DIR, 'allauthdemo', 'templates', 'allauth'),
-        os.path.join(BASE_DIR, 'allauthdemo', 'templates'),
+        join(BASE_DIR, 'allauthdemo', 'templates', 'plain', 'example'),
+        #join(BASE_DIR, 'allauthdemo', 'templates', 'bootstrap', 'allauth'),
+        join(BASE_DIR, 'allauthdemo', 'templates', 'allauth'),
+        join(BASE_DIR, 'allauthdemo', 'templates'),
     ],
     'APP_DIRS': True,
     'OPTIONS': {
@@ -149,11 +149,11 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
+    join(BASE_DIR, "static"),
 )
 
 SITE_ID = 1
-AUTH_USER_MODEL = 'allauthdemo_auth.DemoUser'
+AUTH_USER_MODEL = 'allauthdemo_auth.User'
 LOGIN_REDIRECT_URL = '/member/'
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_USERNAME_REQUIRED = False
