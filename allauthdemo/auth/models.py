@@ -1,13 +1,14 @@
 import hashlib
 
-from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
-from django.utils.encoding import python_2_unicode_compatible
-from django.utils.http import urlquote
 from django.core.mail import send_mail
+from django.db import models
 from django.dispatch import receiver
 from django.utils import timezone
+from django.utils.encoding import python_2_unicode_compatible
+from django.utils.http import urlquote
 from django.utils.translation import ugettext_lazy as _
+
 try:
     from django.utils.encoding import force_text
 except ImportError:
@@ -55,11 +56,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(_('last name'), max_length=40, blank=True, null=True, unique=False)
     display_name = models.CharField(_('display name'), max_length=14, blank=True, null=True, unique=False)
     is_staff = models.BooleanField(_('staff status'), default=False,
-        help_text=_('Designates whether the user can log into this admin '
-                    'site.'))
+                                   help_text=_('Designates whether the user can log into this admin site.'))
     is_active = models.BooleanField(_('active'), default=True,
-        help_text=_('Designates whether this user should be treated as '
-                    'active. Unselect this instead of deleting accounts.'))
+                                    help_text=_('Designates whether this user should be treated as '
+                                                'active. Unselect this instead of deleting accounts.'))
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
     objects = MyUserManager()
@@ -101,7 +101,7 @@ class User(AbstractBaseUser, PermissionsMixin):
             return
 
         if self.first_name and self.last_name:
-            dn = "%s %s" % (self.first_name, self.last_name[0]) # like "Andrew E"
+            dn = "%s %s" % (self.first_name, self.last_name[0])  # like "Andrew E"
         elif self.first_name:
             dn = self.first_name
         else:
@@ -130,7 +130,8 @@ class UserProfile(models.Model):
     profile information you might create additional profile classes, like
     say UserGeologistProfile.
     """
-    user = models.OneToOneField(User, primary_key=True, verbose_name='user', related_name='profile', on_delete=models.CASCADE)
+    user = models.OneToOneField(User, primary_key=True, verbose_name='user', related_name='profile',
+                                on_delete=models.CASCADE)
 
     # I oscillate between whether the ``avatar_url`` should be
     # a) in the User model
@@ -139,7 +140,7 @@ class UserProfile(models.Model):
     #    "current" avatar as a foreign key in User or UserProfile.
     avatar_url = models.CharField(max_length=256, blank=True, null=True)
 
-    dob=models.DateField(verbose_name="dob", blank=True, null=True)
+    dob = models.DateField(verbose_name="dob", blank=True, null=True)
 
     def __str__(self):
         return force_text(self.user.email)
@@ -164,33 +165,33 @@ def set_initial_user_names(request, user, sociallogin=None, **kwargs):
     From http://birdhouse.org/blog/2013/12/03/django-allauth-retrieve-firstlast-names-from-fb-twitter-google/comment-page-1/
     """
 
-    preferred_avatar_size_pixels=256
+    preferred_avatar_size_pixels = 256
 
     picture_url = "http://www.gravatar.com/avatar/{0}?s={1}".format(
         hashlib.md5(user.email.encode('UTF-8')).hexdigest(),
         preferred_avatar_size_pixels
     )
- 
+
     if sociallogin:
         # Extract first / last names from social nets and store on User record
         if sociallogin.account.provider == 'twitter':
             name = sociallogin.account.extra_data['name']
             user.first_name = name.split()[0]
             user.last_name = name.split()[1]
- 
+
         if sociallogin.account.provider == 'facebook':
             user.first_name = sociallogin.account.extra_data['first_name']
             user.last_name = sociallogin.account.extra_data['last_name']
-            #verified = sociallogin.account.extra_data['verified']
+            # verified = sociallogin.account.extra_data['verified']
             picture_url = "http://graph.facebook.com/{0}/picture?width={1}&height={1}".format(
                 sociallogin.account.uid, preferred_avatar_size_pixels)
- 
+
         if sociallogin.account.provider == 'google':
             user.first_name = sociallogin.account.extra_data['given_name']
             user.last_name = sociallogin.account.extra_data['family_name']
-            #verified = sociallogin.account.extra_data['verified_email']
+            # verified = sociallogin.account.extra_data['verified_email']
             picture_url = sociallogin.account.extra_data['picture']
- 
+
     profile = UserProfile(user=user, avatar_url=picture_url)
     profile.save()
 

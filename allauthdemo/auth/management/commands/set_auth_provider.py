@@ -1,6 +1,6 @@
 from allauth.socialaccount.models import SocialApp
 from django.contrib.sites.models import Site
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
@@ -13,7 +13,7 @@ class Command(BaseCommand):
         parser.add_argument('client_secret', type=str, help="Secret from provider (==Facebook App Secret)")
 
     def handle(self, *args, **options):
-        provider= options['provider']
+        provider = options['provider']
         name = options.get('name') or provider.title()
         client_id = options['client_id']
         client_secret = options['client_secret']
@@ -35,6 +35,3 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(
             "Associated with site(s): {}".format(', '.join(s.name for s in sites))
         ))
-
-        #if False:
-        #    raise CommandError('Foo "%s" does not exist' % 808)
