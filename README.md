@@ -165,6 +165,9 @@ The django-allauth library covers []_many_ others providers][allauth-providers]
 
         $ python manage.py createsuperuser
 
+   Tip: do _not_ enter the same email address that you'll connect via Google/Facebook with.
+   In development I use a made up address like "me@admin.test".
+
 7. Add the social providers:
 
    Run this for each provider you want to include.
@@ -245,6 +248,9 @@ here's what I do:
   You'll need to rebuild the database (I suggest you do this after you've built the
   initial app and renamed things anyway). Don't leave this too late as trying to
   migrate the `User` class to a new name doesn't work nicely when you've got real data.
+
+- Check the `auth.models.UserProfile` class. The draft one includes date-of-birth (`dob`),
+  which you might want to remove.
 
 - Change settings so Postgres or another full database is used, not sqlite (which is
   awesome, but not right for a real project!)
