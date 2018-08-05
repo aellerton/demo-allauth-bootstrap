@@ -1,8 +1,11 @@
 # demo-allauth-bootstrap
 
-Simple, out-of-the-box Django website with a visitor (no login) area and
-a user (login required) area, where registration and login can be via providers
-like Google and Facebook.
+A simple, out-of-the-box Django website with a "visitor" (no login reuired) area
+and a members (login required) area. Supports local email/password as well as easy
+configuration for authentication from providers like Google and Facebook.
+
+Simple, old style HTML templates; no webpack or node. Focuses on getting a simple
+visitors and members site up quickly.
 
 
 ## tl;dr
