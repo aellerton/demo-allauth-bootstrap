@@ -1,4 +1,4 @@
-#!/bin/env
+#!/usr/bin/env python
 """Help new users configure the database for use with social networks.
 """
 import os
@@ -48,7 +48,10 @@ Run these commands:
     {% if google %}# Google
     python manage.py set_auth_provider google {{google.client_id}} {{google.secret}}{% endif %}
 
-If you have other providers you can add them in that way.
+If you have other providers you can add them like:
+
+    python manage.py set_auth_provider <name like 'google'> <client id> <secret>
+
 """)
 
 settings_template = get_template("settings.template.py")
@@ -61,12 +64,12 @@ def heading(text):
 
 
 def ask_yes_no(msg):
-    msg = "\n" + msg.strip() + '\n\nPlease enter "yes" or "no": '
+    msg = "\n" + msg.strip() + ' (y/n): '
     confirm = input(msg)
     while True:
         confirm = confirm.strip().lower()
         if confirm not in ('yes', 'y', 'no', 'n'):
-            confirm = input('Please enter either "yes" or "no": ')
+            confirm = input('Please enter y or n (or "yes" or "no"): ')
             continue
         return confirm in ('yes', 'y')
 

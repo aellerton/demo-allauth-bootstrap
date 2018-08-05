@@ -48,7 +48,10 @@ own site.
 
 ## Pre-setup
 
-If you want to use a provider like Facebook or Google, you'll need to do do setup
+If you want users to register and set passwords locally, i.e. never via a provider
+like Facebook or Google, run `configure.py` and answer `'n'` to the questions.
+
+If you want to use a provider like Facebook or Google, you'll need to do a little setup
 on those sites to get settings you'll need in Django.
 
 
