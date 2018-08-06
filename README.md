@@ -155,7 +155,7 @@ The django-allauth library covers []_many_ others providers][allauth-providers]
 
         $ python configure.py
 
-   Follow the prompts. This will generate the initial `settings.py`
+   Follow the prompts. This will generate the initial `config/settings.py`
 
 4. Set up the initial migrations:
 
@@ -246,7 +246,7 @@ here's what I do:
 
 - Remove unnecessary files:
 
-        rm LICENSE README.md allauthdemo/settings.template.py configure.py
+        rm LICENSE README.md config/settings.template.py configure.py
 
 - Rename the `"allauthdemo"` directory to something more appropriate
 

@@ -24,7 +24,7 @@ settings.configure(
         BACKEND='django.template.backends.django.DjangoTemplates',
         APP_DIRS=True,
         DIRS=[
-            os.path.join(BASE_DIR, 'allauthdemo'),
+            os.path.join(BASE_DIR, 'config'),
         ],
     )],
 )
@@ -42,7 +42,7 @@ Run these commands:
 
     python manage.py makemigrations allauthdemo_auth
     python manage.py migrate
-    python manage.py createsuperuser
+    python manage.py createsuperuser  # optional
     {% if facebook %}# Facebook
     python manage.py set_auth_provider facebook {{facebook.client_id}} {{facebook.secret}}{% endif %}
     {% if google %}# Google
@@ -50,7 +50,13 @@ Run these commands:
 
 If you have other providers you can add them like:
 
-    python manage.py set_auth_provider <name like 'google'> <client id> <secret>
+    python manage.py set_auth_provider <name e.g. 'google'> <client id> <secret>
+
+Finally:
+
+    python manage.py runserver
+
+Load http://127.0.0.1:8000/ in your browser.
 
 """)
 
@@ -121,7 +127,7 @@ if __name__ == "__main__":
         context['google'] = ask_google()
 
     heading("Rendering settings...")
-    with open('allauthdemo/settings.py', 'w') as out:
+    with open('config/settings.py', 'w') as out:
         out.write(settings_template.render(context, request=None))
     print("OK")
 
