@@ -132,7 +132,7 @@ load your local site as http://127.0.0.1:8000/
 
 ### Configure authentication with other providers
 
-The django-allauth library covers []_many_ others providers][allauth-providers]  
+The django-allauth library covers [_many_ others providers][allauth-providers]
 
 
 ## First-time setup
