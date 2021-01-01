@@ -279,9 +279,9 @@ Then I cloned the github repo and worked with the example directory, customising
 what made sense to me. I moved it to use Bootstrap only and added some basic standard
 stuff like a landing page and stubs for terms and contact.
 
-I moved the bootstrap forms to use the bootstrap3 library. At the very least that
+I moved the bootstrap forms to use the bootstrap4 library. At the very least that
 made handling Django "messages" better (though see my notes in "Rough Edges" below).
-Read about bootstrap3 here: http://django-bootstrap3.readthedocs.org/en/latest/
+Read about bootstrap4 here: http://django-bootstrap4.readthedocs.org/en/latest/
 
 
 ### Why I built this
