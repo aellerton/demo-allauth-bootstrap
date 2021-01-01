@@ -18,7 +18,7 @@ BASE_DIR = dirname(dirname(__file__))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '{{ secret_key }}'
+SECRET_KEY = '3rs)_-ie!tn_u@1i_^4w-^t^ban2os13s8x6$vsk^mf==+f(wu'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -41,18 +41,7 @@ INSTALLED_APPS = (
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-{% if facebook or google %}
-{% if facebook %}
-    'allauth.socialaccount.providers.facebook',  # enabled by configure
-{% endif %}
-{% if google %}
-    'allauth.socialaccount.providers.google',  # enabled by configure
-{% endif %}
-    #'allauth.socialaccount.providers.dropbox',
-    #'allauth.socialaccount.providers.github',
-    #'allauth.socialaccount.providers.linkedin',
-    # etc
-{% endif %}
+
 
     'allauthdemo.auth',
     'allauthdemo.demo',
