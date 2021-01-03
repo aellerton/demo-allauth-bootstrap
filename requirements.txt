@@ -1,6 +1,4 @@
-django
-django-allauth
-## I don't think this is needed: django-uuidfield  # you don't have to use uuids, but I choose to.
-django-bootstrap4  # allauth doesn't require this but again I chose to.
-
-six
+Django==2.2.13
+django-allauth==0.44.0
+django-bootstrap4==2.3.1
+six==1.15.0
