@@ -1,27 +1,88 @@
 # demo-allauth-bootstrap
 
-A simple, out-of-the-box Django website with a "visitor" (no login reuired) area
-and a members (login required) area. Supports local email/password as well as easy
-configuration for authentication from providers like Google and Facebook.
+- Simple, out-of-the-box Django all-auth demo app
+- A "brochure" or visitor (no login reuired) area
+- A members-only (login required) area.
+- Supports local email/password as well as easy oauth with Google, Facebook and others.
 
-Simple, old style HTML templates; no webpack or node. Focuses on getting a simple
-visitors and members site up quickly.
+This is a simple, old-style HTML request/response website.
+No webpack, node, JavaScript framework.
+Objective is to get you a basic, visitor-and-member website operational quickly.
 
 
 ## tl;dr
 
-1. Clone or download the repo
-2. Do a little setup
-3. Run the server - dev is done
-4. [Remove some files, rename some more](#make-the-repo-yours),
-   and and you've got the basis of your new site
+1. Get your Facebook and/or Google app creds (see sections below for more info);
+2. Clone or download the repo; then
+3. Follow instructions below:
 
+```
+$ cd demo-allauth-bootstrap
 
-## Objectives
+## create and use a Python virtualenv:
 
-1. Help anyone building a new site get up and going quickly with allauth.
+$ python3 -m venv mypy          # doesn't have to be called "mypy"; it's just my convention.
+$ . ./mypy/bin/active           # adjust this if you used a name other than "mypy"
 
-2. Help remind me how a basic site hangs together ;)
+## install all dependencies into this venv:
+
+$ pip install -r requirements.txt
+
+## run the handy configure script:
+
+$ python ./configure.py
+
+--------
+Facebook
+--------
+
+Do you want to configure auth via Facebook?
+You'll need the app secret and client. (y/n): y              # or enter 'n' to skip
+
+Facebook App Secret? >                                       # Facebook secret here...
+
+Facebook App ID (not client token)?                          # and app ID here.
+
+------
+Google
+------
+
+Do you want to configure auth via Google?
+You'll need the app secret and client. (y/n): y              # or enter 'n' to skip
+
+Google Secret? >                                             # Google secret here...
+
+Google Client ID? >                                          # and Google client ID here.
+
+----------
+Next steps
+----------
+
+Run these commands:
+
+    python manage.py makemigrations allauthdemo_auth
+    python manage.py migrate
+    python manage.py createsuperuser                         # optional; doesn't need real email address.
+
+    # Facebook
+    python manage.py set_auth_provider facebook --redacted-info-here--
+
+    # Google
+    python manage.py set_auth_provider google --redacted-info-here--
+
+If you have other providers you can add them like:
+
+    python manage.py set_auth_provider <name e.g. 'google'> <client id> <secret>
+
+Finally:
+
+    python manage.py runserver
+
+```
+
+Run the commands shown in "next steps" above.
+
+Load http://127.0.0.1:8000/ in your browser.
 
 
 ## Tips
@@ -35,6 +96,7 @@ own site.
 
 ### Tips for Facebook
 
+- *See "Configure Facebook Login" section below*
 - You'll need the Facebook App ID (NOT any client ID) and the secret.
 - Repeat, the Facebook App ID and NOT any client ID is what should be entered
   for "client ID"
@@ -46,6 +108,7 @@ own site.
 
 ### Tips for Google
 
+- *See "Configure Google Login" section below*
 - You'll need the Google client ID and secret from the Google Developer Console.
 
 
