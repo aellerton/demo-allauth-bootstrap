@@ -11,8 +11,8 @@ class UserEditForm(forms.ModelForm):
     """
 
     def __init__(self, *args, **kwargs):
-        # TODO: this doesn't seem to work. Need to get to the bottom of it.
-        super().__init__(*args, **kwargs)
+        super(UserEditForm, self).__init__(*args, **kwargs)
+        # Do stuff with form instance here
 
     class Meta:
         model = User
