@@ -39,7 +39,6 @@ class UserEditView(UpdateView):
         return self.request.user
 
     def form_valid(self, form):
-        form.save()
         messages.add_message(self.request, messages.INFO, 'User profile updated')
         return super(UserEditView, self).form_valid(form)
 
