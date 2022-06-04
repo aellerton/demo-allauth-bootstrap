@@ -14,7 +14,7 @@ import django
 from django.conf import settings
 from django.core.management.utils import get_random_secret_key
 
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
 # TEMPLATES structure changed in Django 1.10
 settings.configure(
